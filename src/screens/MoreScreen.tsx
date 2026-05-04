@@ -2,10 +2,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { useAuth } from "../auth/AuthProvider";
 import AppButton from "../components/AppButton";
 import AppCard from "../components/AppCard";
 import Screen from "../components/Screen";
+import { useAuth } from "../providers/AuthProvider";
 import { useTheme } from "../theme/ThemeProvider";
 
 export default function MoreScreen({ navigation }: any) {

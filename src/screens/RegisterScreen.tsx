@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getApiErrorMessage } from "../api/apiError";
-import { useAuth } from "../auth/AuthProvider";
 import AppButton from "../components/AppButton";
 import AppCard from "../components/AppCard";
 import AppInput from "../components/AppInput";
 import Screen from "../components/Screen";
+import { useAuth } from "../providers/AuthProvider";
 import { useTheme } from "../theme/ThemeProvider";
 
 export default function RegisterScreen({ navigation }: any) {

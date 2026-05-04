@@ -12,8 +12,8 @@ import { Transaction } from "../api/transactionsApi";
 import AppButton from "../components/AppButton";
 import AppCard from "../components/AppCard";
 import Screen from "../components/Screen";
+import { useTransactions } from "../providers/TransactionsProvider";
 import { useTheme } from "../theme/ThemeProvider";
-import { useTransactions } from "../transactions/TransactionsProvider";
 
 function formatMoney(value: number) {
   return new Intl.NumberFormat("pt-BR", {

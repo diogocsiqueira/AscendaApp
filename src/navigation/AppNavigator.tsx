@@ -4,8 +4,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ActivityIndicator, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useAuth } from "../auth/AuthProvider";
 import FAB from "../components/FAB";
+import { useAuth } from "../providers/AuthProvider";
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CreateFixedBillScreen from "../screens/CreateFixedBillScreen";
 import CreateTransactionScreen from "../screens/CreateTransactionScreen";

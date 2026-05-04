@@ -9,7 +9,7 @@ import AppButton from "../components/AppButton";
 import AppCard from "../components/AppCard";
 import AppInput from "../components/AppInput";
 import Screen from "../components/Screen";
-import { useFixedBills } from "../fixedBills/FixedBillsProvider";
+import { useFixedBills } from "../providers/FixedBillsProvider";
 import { useTheme } from "../theme/ThemeProvider";
 
 function normalizeAmount(value: string) {

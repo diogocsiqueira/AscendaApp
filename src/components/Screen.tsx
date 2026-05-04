@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { RefreshControlProps, StyleSheet, ViewStyle } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../theme/ThemeProvider";
@@ -8,13 +8,23 @@ type Props = {
   children: ReactNode;
   scroll?: boolean;
   style?: ViewStyle | ViewStyle[];
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 };
 
-export default function Screen({ children, scroll = true, style }: Props) {
+export default function Screen({
+  children,
+  scroll = true,
+  style,
+  refreshControl,
+}: Props) {
   const { theme } = useTheme();
 
   if (!scroll) {
-    return <SafeAreaView style={[styles.safe, { backgroundColor: theme.bg }, style]}>{children}</SafeAreaView>;
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: theme.bg }, style]}>
+        {children}
+      </SafeAreaView>
+    );
   }
 
   return (
@@ -26,6 +36,7 @@ export default function Screen({ children, scroll = true, style }: Props) {
         keyboardShouldPersistTaps="handled"
         enableOnAndroid
         extraScrollHeight={90}
+        refreshControl={refreshControl}
       >
         {children}
       </KeyboardAwareScrollView>
