@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import * as SecureStore from "expo-secure-store";
 
-const API_URL = "http://192.168.18.4:8080";
+const API_URL = "https://caixacontrol.onrender.com";
 
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";

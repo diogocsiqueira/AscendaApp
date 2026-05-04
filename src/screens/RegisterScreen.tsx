@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { getApiErrorMessage } from "../api/apiError";
 import AppButton from "../components/AppButton";
 import AppCard from "../components/AppCard";
@@ -14,16 +14,42 @@ export default function RegisterScreen({ navigation }: any) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
   async function handleRegister() {
+    const cleanEmail = email.trim();
+
+    if (!cleanEmail) {
+      setError("Informe seu e-mail.");
+      return;
+    }
+
+    if (!password) {
+      setError("Informe sua senha.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("A senha precisa ter pelo menos 6 caracteres.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("As senhas não conferem.");
+      return;
+    }
+
     try {
       setBusy(true);
       setError("");
 
-      await register(email.trim(), password);
+      await register(cleanEmail, password);
 
       navigation.replace("Login");
     } catch (err: any) {
@@ -55,19 +81,52 @@ export default function RegisterScreen({ navigation }: any) {
             keyboardType="email-address"
           />
 
-          <AppInput
-            placeholder="Senha"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <View style={styles.passwordBox}>
+            <AppInput
+              placeholder="Senha"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!showPassword}
+              style={styles.passwordInput}
+            />
+
+            <Pressable
+              onPress={() => setShowPassword((prev) => !prev)}
+              style={styles.eyeButton}
+              hitSlop={10}
+            >
+              <Text style={[styles.eyeText, { color: theme.primary }]}>
+                {showPassword ? "Ocultar" : "Ver"}
+              </Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.passwordBox}>
+            <AppInput
+              placeholder="Confirmar senha"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!showConfirmPassword}
+              style={styles.passwordInput}
+            />
+
+            <Pressable
+              onPress={() => setShowConfirmPassword((prev) => !prev)}
+              style={styles.eyeButton}
+              hitSlop={10}
+            >
+              <Text style={[styles.eyeText, { color: theme.primary }]}>
+                {showConfirmPassword ? "Ocultar" : "Ver"}
+              </Text>
+            </Pressable>
+          </View>
         </View>
 
         {error ? (
           <Text style={[styles.error, { color: theme.danger }]}>{error}</Text>
         ) : null}
 
-        <AppButton onPress={handleRegister}>
+        <AppButton onPress={handleRegister} disabled={busy}>
           {busy ? "Criando..." : "Criar conta"}
         </AppButton>
 
@@ -108,6 +167,24 @@ const styles = StyleSheet.create({
   form: {
     gap: 12,
     marginBottom: 16,
+  },
+  passwordBox: {
+    position: "relative",
+    justifyContent: "center",
+  },
+  passwordInput: {
+    paddingRight: 82,
+  },
+  eyeButton: {
+    position: "absolute",
+    right: 14,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  eyeText: {
+    fontSize: 12,
+    fontWeight: "900",
   },
   error: {
     fontWeight: "800",
